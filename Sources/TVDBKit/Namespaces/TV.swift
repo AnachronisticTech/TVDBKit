@@ -1,9 +1,13 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 public protocol _TV {
-    static func getDetails(ofShowWithId id: Int,
-        completion: @escaping (Result<Series, TVDBError>) -> ())
+    static func getDetails(
+        ofShowWithId id: Int,
+        completion: @escaping (Result<Series, TVDBError>) -> ()
+    )
 }
 
 public extension _TV {

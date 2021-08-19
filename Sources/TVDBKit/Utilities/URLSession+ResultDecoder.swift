@@ -2,13 +2,15 @@
 // https://swiftstudent.com/2020-04-14-urlsession-and-result/
 
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 typealias DataResult = Result<Data, TVDBError>
 
 extension URLSession {
     func dataTask(with request: URLRequest, resultHandler: @escaping (DataResult) -> ()) -> URLSessionDataTask {
-        self.dataTask(with: request) { data, response, error in
+        dataTask(with: request) { data, response, error in
             if let networkError = TVDBError(data: data, response: response, error: error) {
                 resultHandler(.failure(networkError))
                 return

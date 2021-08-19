@@ -1,12 +1,15 @@
 import Foundation
 
 public protocol _Convenience {
-    static func getEpisodes(ofShowWithId id: Int,
-        completion: @escaping (Result<[Episode], TVDBError>) -> ())
+    static func getEpisodes(
+        ofShowWithId id: Int,
+        completion: @escaping (Result<[Episode], TVDBError>) -> ()
+    )
 }
 
 public extension _Convenience {
-    static func getEpisodes(ofShowWithId id: Int, 
+    static func getEpisodes(
+        ofShowWithId id: Int, 
         completion: @escaping (Result<[Episode], TVDBError>) -> () = { _ in }
     ) {
         TVDB.TV.getDetails(ofShowWithId: id) { result in

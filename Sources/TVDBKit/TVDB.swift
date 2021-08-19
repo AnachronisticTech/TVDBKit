@@ -1,6 +1,3 @@
-import Foundation
-import FoundationNetworking
-
 public protocol _TVDB {
     static func setToken(_ token: String)
 }

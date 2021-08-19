@@ -1,10 +1,13 @@
 import Foundation
+#if canImport(FoundationNetworking)
 import FoundationNetworking
+#endif
 
 public protocol _TVSeasons {
     static func getDetails(
         ofSeason season: Int, forShowWithId id: Int,
-        completion: @escaping (Result<Season, TVDBError>) -> ())
+        completion: @escaping (Result<Season, TVDBError>) -> ()
+    )
 }
 
 public extension _TVSeasons {
