@@ -27,14 +27,14 @@
 import Foundation
 
 public struct Season: Codable {
-    // let _id: String?
-    let airDate: Date?
-    let episodes: [Episode]
-    let id: Int
-    let name: String
-    let overview: String
-    let posterPath: String?
-    let seasonNumber: Int
+    // public let _id: String?
+    public let airDate: Date?
+    public let episodes: [Episode]
+    public let id: Int
+    public let name: String
+    public let overview: String
+    public let posterPath: String?
+    public let seasonNumber: Int
 
     enum CodingKeys: String, CodingKey {
         // case _id = "_id"
@@ -59,19 +59,19 @@ public struct Season: Codable {
         seasonNumber = try values.decode(Int.self, forKey: .seasonNumber)
     }
 
-    public struct Episode: Codable, CustomStringConvertible {
-        let airDate: Date?
-        let crew: [Crew]
-        let episodeNumber: Int
-        let guestStars: [GuestStar]
-        let id: Int
-        let name: String
-        let overview: String
-        let productionCode: String?
-        let seasonNumber: Int
-        let stillPath: String?
-        let voteAverage: Float?
-        let voteCount: Int?
+    public struct Episode: Codable, CustomStringConvertible, Hashable, Identifiable {
+        public let airDate: Date?
+        public let crew: [Crew]
+        public let episodeNumber: Int
+        public let guestStars: [GuestStar]
+        public let id: Int
+        public let name: String
+        public let overview: String
+        public let productionCode: String?
+        public let seasonNumber: Int
+        public let stillPath: String?
+        public let voteAverage: Float?
+        public let voteCount: Int?
 
         enum CodingKeys: String, CodingKey {
             case airDate = "air_date"
@@ -104,23 +104,31 @@ public struct Season: Codable {
             voteCount = try values.decodeIfPresent(Int.self, forKey: .voteCount)
         }
 
+        public static func ==(lhs: Episode, rhs: Episode) -> Bool {
+            lhs.id == rhs.id
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+
         public var description: String {
             "\(seasonNumber)x\(episodeNumber), \(name), aired: \(airDate), id: \(id)"
         }
     }
 
     public struct GuestStar: Codable {
-        let adult: Bool?
-        let character: String?
-        let creditId: String?
-        let gender: Int?
-        let id: Int
-        let knownForDepartment: String?
-        let name: String?
-        let order: Int?
-        let originalName: String?
-        let popularity: Float?
-        let profilePath: String?
+        public let adult: Bool?
+        public let character: String?
+        public let creditId: String?
+        public let gender: Int?
+        public let id: Int
+        public let knownForDepartment: String?
+        public let name: String?
+        public let order: Int?
+        public let originalName: String?
+        public let popularity: Float?
+        public let profilePath: String?
 
         enum CodingKeys: String, CodingKey {
             case adult = "adult"
@@ -153,17 +161,17 @@ public struct Season: Codable {
     }
 
     public struct Crew: Codable {
-        let adult: Bool?
-        let creditId: String?
-        let department: String?
-        let gender: Int?
-        let id: Int
-        let job: String?
-        let knownForDepartment: String?
-        let name: String?
-        let originalName: String?
-        let popularity: Float?
-        let profilePath: String?
+        public let adult: Bool?
+        public let creditId: String?
+        public let department: String?
+        public let gender: Int?
+        public let id: Int
+        public let job: String?
+        public let knownForDepartment: String?
+        public let name: String?
+        public let originalName: String?
+        public let popularity: Float?
+        public let profilePath: String?
 
         enum CodingKeys: String, CodingKey {
             case adult = "adult"
