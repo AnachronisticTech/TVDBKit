@@ -9,6 +9,7 @@ public enum TVDBError: Error, CustomStringConvertible {
     case serverError(statusCode: Int)
     case emptyData
     case decodingError(Error)
+    case seasonDecodingError([Error], [Season.Episode])
 
     init?(data: Data?, response: URLResponse?, error: Error?) {
         if let error = error {
@@ -41,6 +42,8 @@ public enum TVDBError: Error, CustomStringConvertible {
                 return "[ERROR] The server response contained no data."
             case .decodingError(let error):
                 return "[ERROR] There was a problem decoding the data received from the server: \(error)"
+            case .seasonDecodingError(let errors, _):
+                return "[ERROR] There were errors decoding a season: \(errors)"
         }
     }
 }
