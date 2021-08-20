@@ -10,7 +10,7 @@ struct EpisodeLister {
         print("")
         let semaphore = DispatchSemaphore(value: 0)
 
-        func resultPrinter(result: Result<[Episode], TVDBError>) {
+        func resultPrinter(result: Result<[Season.Episode], TVDBError>) {
             switch result {
                 case .success(let episodes):
                     print("[SUCCESS] Episodes:")
@@ -46,7 +46,7 @@ struct EpisodeLister {
         }
         semaphore.wait()
 
-        TVDB.Convenience.getEpisodes(ofShowWithId: Show.Stargirl, completion: resultPrinter)
+        TVDB.Convenience.getEpisodes(ofShowWithId: Show.LegendsOfTomorrow, completion: resultPrinter)
         semaphore.wait()
 
         TVDB.TV.getDetails(ofShowWithId: Show.Constantine) { result in
