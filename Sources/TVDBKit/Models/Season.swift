@@ -122,7 +122,7 @@ public struct Season: Codable {
         public let character: String?
         public let creditId: String?
         public let gender: Int?
-        public let id: Int
+        public let id: Int?
         public let knownForDepartment: String?
         public let name: String?
         public let order: Int?
@@ -150,7 +150,7 @@ public struct Season: Codable {
             character = try values.decodeIfPresent(String.self, forKey: .character)
             creditId = try values.decodeIfPresent(String.self, forKey: .creditId)
             gender = try values.decodeIfPresent(Int.self, forKey: .gender)
-            id = try values.decode(Int.self, forKey: .id)
+            id = try values.decodeIfPresent(Int.self, forKey: .id)
             knownForDepartment = try values.decodeIfPresent(String.self, forKey: .knownForDepartment)
             name = try values.decodeIfPresent(String.self, forKey: .name)
             order = try values.decodeIfPresent(Int.self, forKey: .order)
@@ -165,7 +165,7 @@ public struct Season: Codable {
         public let creditId: String?
         public let department: String?
         public let gender: Int?
-        public let id: Int
+        public let id: Int?
         public let job: String?
         public let knownForDepartment: String?
         public let name: String?
@@ -193,7 +193,7 @@ public struct Season: Codable {
             creditId = try values.decodeIfPresent(String.self, forKey: .creditId)
             department = try values.decodeIfPresent(String.self, forKey: .department)
             gender = try values.decodeIfPresent(Int.self, forKey: .gender)
-            id = try values.decode(Int.self, forKey: .id)
+            id = try values.decodeIfPresent(Int.self, forKey: .id)
             job = try values.decodeIfPresent(String.self, forKey: .job)
             knownForDepartment = try values.decodeIfPresent(String.self, forKey: .knownForDepartment)
             name = try values.decodeIfPresent(String.self, forKey: .name)
