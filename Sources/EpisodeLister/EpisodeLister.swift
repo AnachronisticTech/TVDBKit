@@ -1,4 +1,4 @@
-import TVDBKit
+import TheMovieDBKit
 import Foundation
 
 // https://developers.themoviedb.org/3/tv/get-tv-details
@@ -10,18 +10,16 @@ struct EpisodeLister {
         print("")
         let semaphore = DispatchSemaphore(value: 0)
 
-        func resultPrinter(result: Result<[Season.Episode], TVDBError>) {
+        /// Missing token example
+        TheMovieDB.TV.getDetails(ofShow: Show.Constantine) { result in
+            defer { semaphore.signal() }
             switch result {
-                case .success(let episodes):
-                    print("[SUCCESS] Episodes:")
-                    episodes.forEach { print($0) }
+                case .success(let series):
+                    print("[SUCCESS] series: \(series)")
                 case .failure(let error):
-                    print(String(describing: error))
+                    print("[ERROR] \(error)")
             }
-            semaphore.signal()
         }
-
-        TVDB.Convenience.getEpisodes(ofShowWithId: Show.Constantine, completion: resultPrinter)
         semaphore.wait()
 
         // API key has been abstracted away by the developer. To enable building,
@@ -30,33 +28,77 @@ struct EpisodeLister {
         // struct Constants {
         //     static let apiKey: String = <<V4 API KEY HERE>>
         // }
-        TVDB.setToken(Constants.apiKey)
+        TheMovieDB.setToken(Constants.apiKey)
 
-        TVDB.Convenience.getEpisodes(ofShowWithId: 80986790832457890, completion: resultPrinter)
-        semaphore.wait()
-
-        TVDB.TVSeasons.getDetails(ofSeason: 1, forShowWithId: Show.Constantine) { result in
-            switch result {
-                case .success(let season):
-                    print("[SUCCESS] Season: \(season)")
-                case .failure(let error):
-                    print(String(describing: error))
-            }
-            semaphore.signal()
-        }
-        semaphore.wait()
-
-        TVDB.Convenience.getEpisodes(ofShowWithId: Show.LegendsOfTomorrow, completion: resultPrinter)
-        semaphore.wait()
-
-        TVDB.TV.getDetails(ofShowWithId: Show.Constantine) { result in
+        /// No show with id example
+        TheMovieDB.TV.getDetails(ofShow: 80986790832457890) { result in
+            defer { semaphore.signal() }
             switch result {
                 case .success(let series):
                     print("[SUCCESS] series: \(series)")
                 case .failure(let error):
-                    print(String(describing: error))
+                    print("[ERROR] \(error)")
             }
-            semaphore.signal()
+        }
+        semaphore.wait()
+
+        /// Series example
+        TheMovieDB.TV.getDetails(ofShow: Show.Constantine) { result in
+            defer { semaphore.signal() }
+            switch result {
+                case .success(let series):
+                    print("[SUCCESS] series: \(series)")
+                case .failure(let error):
+                    print("[ERROR] \(error)")
+            }
+        }
+        semaphore.wait()
+
+        /// Season example
+        TheMovieDB.TVSeasons.getDetails(ofSeason: 1, forShow: Show.Constantine) { result in
+            defer { semaphore.signal() }
+            switch result {
+                case .success(let season):
+                    print("[SUCCESS] season: \(season)")
+                case .failure(let error):
+                    print("[ERROR] \(error)")
+            }
+        }
+        semaphore.wait()
+
+        /// Episodes example
+        TheMovieDB.Convenience.getEpisodes(ofShow: Show.Constantine) { result in
+            defer { semaphore.signal() }
+            switch result {
+                case .success(let episodes):
+                    print("[SUCCESS] episodes: \(episodes.map({ $0.name }).joined(separator: ", "))")
+                case .failure(let error):
+                    print("[ERROR] \(error)")
+            }
+        }
+        semaphore.wait()
+
+        /// Search example
+        TheMovieDB.Search.shows("Star Trek") { result in
+            defer { semaphore.signal() }
+            switch result {
+                case .success(let search):
+                    print("[SUCCESS] search: \(search)")
+                case .failure(let error):
+                    print("[ERROR] \(error)")
+            }
+        }
+        semaphore.wait()
+
+        /// Images example
+        TheMovieDB.Images.get(from: "/bPsxOpHVpVCX3hFz2fxnF1Vz3Dj.jpg") { result in
+            defer { semaphore.signal() }
+            switch result {
+                case .success(let data):
+                    print("[SUCCESS] image: \(String(describing: data))")
+                case .failure(let error):
+                    print("[ERROR] \(error)")
+            }
         }
         semaphore.wait()
     }

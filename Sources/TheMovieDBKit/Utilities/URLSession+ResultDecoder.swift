@@ -6,12 +6,12 @@ import Foundation
 import FoundationNetworking
 #endif
 
-typealias DataResult = Result<Data, TVDBError>
+typealias DataResult = Result<Data, TheMovieDBError>
 
 extension URLSession {
     func dataTask(with request: URLRequest, resultHandler: @escaping (DataResult) -> ()) -> URLSessionDataTask {
         dataTask(with: request) { data, response, error in
-            if let networkError = TVDBError(data: data, response: response, error: error) {
+            if let networkError = TheMovieDBError(data: data, response: response, error: error) {
                 resultHandler(.failure(networkError))
                 return
             }
@@ -27,10 +27,10 @@ struct ResultDecoder<T> {
         self.transform = transform
     }
 
-    func decode(_ result: DataResult) -> Result<T, TVDBError> {
+    func decode(_ result: DataResult) -> Result<T, TheMovieDBError> {
         result.flatMap { data in
             Result { try transform(data) }
-                .mapError { TVDBError.decodingError($0) }
+                .mapError { TheMovieDBError.decodingError($0) }
         }
     }
 }

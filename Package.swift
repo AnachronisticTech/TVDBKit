@@ -4,10 +4,10 @@
 import PackageDescription
 
 let package = Package(
-    name: "TVDBKit",
+    name: "TheMovieDBKit",
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: "TVDBKit", targets: ["TVDBKit"]),
+        .library(name: "TheMovieDBKit", targets: ["TheMovieDBKit"]),
         .executable(name: "EpisodeLister", targets: ["EpisodeLister"])
     ],
     dependencies: [
@@ -18,14 +18,14 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "TVDBKit",
+            name: "TheMovieDBKit",
             dependencies: []),
         .testTarget(
-            name: "TVDBKitTests",
-            dependencies: ["TVDBKit"]),
+            name: "TheMovieDBKitTests",
+            dependencies: ["TheMovieDBKit"]),
         .executableTarget(
             name: "EpisodeLister",
-            dependencies: ["TVDBKit"],
+            dependencies: ["TheMovieDBKit"],
             swiftSettings: [
                 .unsafeFlags([
                     "-parse-as-library"
