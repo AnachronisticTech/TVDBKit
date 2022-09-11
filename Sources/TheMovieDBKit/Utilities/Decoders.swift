@@ -1,13 +1,6 @@
 import Foundation
 
-protocol _ModelDecoders {
-    static var seriesDecoder: ResultDecoder<Series> { get }
-    static var seasonDecoder: ResultDecoder<Season> { get }
-}
-
-class _Decoders: _ModelDecoders {
-    private init() {}
-
+internal enum Decoders {
     static let seriesDecoder = ResultDecoder<Series> { data in
         try JSONDecoder().decode(Series.self, from: data)
     }

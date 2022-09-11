@@ -3,9 +3,9 @@ import Foundation
 import FoundationNetworking
 #endif
 
-public enum TVDBError: Error, CustomStringConvertible {
+public enum TheMovieDBError: Error, CustomStringConvertible {
     case bearerTokenNotSetError
-    case transporError(Error)
+    case transportError(Error)
     case serverError(statusCode: Int)
     case emptyData
     case decodingError(Error)
@@ -13,7 +13,7 @@ public enum TVDBError: Error, CustomStringConvertible {
 
     init?(data: Data?, response: URLResponse?, error: Error?) {
         if let error = error {
-            self = .transporError(error)
+            self = .transportError(error)
             return
         }
 
@@ -33,17 +33,17 @@ public enum TVDBError: Error, CustomStringConvertible {
     public var description: String {
         switch self {
             case .bearerTokenNotSetError: 
-                return "[ERROR] No Bearer token was provided for authentication. Please set one using `TVDB.setToken(_:)`. A v4 auth token can be obtained from https://www.themoviedb.org/settings/api."
-            case .transporError(let error): 
-                return "[ERROR] There was a problem communicating with the server: \(error)"
+                return "No Bearer token was provided for authentication. Please set one using `TheMovieDB.setToken(_:)`. A v4 auth token can be obtained from https://www.themoviedb.org/settings/api."
+            case .transportError(let error):
+                return "There was a problem communicating with the server: \(error)"
             case .serverError(statusCode: let code):
-                return "[ERROR] The server reported en error of type \(code)."
+                return "The server reported en error of type \(code)."
             case .emptyData:
-                return "[ERROR] The server response contained no data."
+                return "The server response contained no data."
             case .decodingError(let error):
-                return "[ERROR] There was a problem decoding the data received from the server: \(error)"
+                return "There was a problem decoding the data received from the server: \(error)"
             case .seasonDecodingError(let errors, _):
-                return "[ERROR] There were errors decoding a season: \(errors)"
+                return "There were errors decoding a season: \(errors)"
         }
     }
 }

@@ -3,22 +3,20 @@
 //  Model Generated using http://www.jsoncafe.com/ 
 //  Created on March 10, 2021
 
-public struct Series : Codable {
-    let id : Int
-    let name : String
-    let numberOfEpisodes : Int
-    let numberOfSeasons : Int
-    let status : String?
-    let tagline : String?
-    let inProduction : Bool?
+public struct Series: Codable {
+    let id: Int
+    let name: String
+    let numberOfEpisodes: Int
+    let numberOfSeasons: Int
+    let status: String?
+    let tagline: String?
+    let inProduction: Bool?
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
+        case id, name
+        case status, tagline
         case numberOfEpisodes = "number_of_episodes"
         case numberOfSeasons = "number_of_seasons"
-        case status = "status"
-        case tagline = "tagline"
         case inProduction = "in_production"
     }
 

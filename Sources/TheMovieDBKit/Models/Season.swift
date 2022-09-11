@@ -1,33 +1,11 @@
 //
 //  Season.swift
 //  Model Generated using http://www.jsoncafe.com/ 
-//  Created on March 10, 2021
-
-// public struct Season: Codable {
-//     let episodes: [Episode]
-//     let seasonNumber: Int
-
-//     enum CodingKeys: String, CodingKey {
-//         case episodes = "episodes"
-//         case seasonNumber = "season_number"
-//     }
-
-//     public init(from decoder: Decoder) throws {
-//         let values = try decoder.container(keyedBy: CodingKeys.self)
-//         episodes = try values.decode([Episode].self, forKey: .episodes)
-//         seasonNumber = try values.decode(Int.self, forKey: .seasonNumber)
-//     }
-// }
-
-//
-//  Season.swift
-//  Model Generated using http://www.jsoncafe.com/ 
 //  Created on August 20, 2021
 
 import Foundation
 
 public struct Season: Codable {
-    // public let _id: String?
     public let airDate: Date?
     public let episodes: [Episode]
     public let id: Int
@@ -37,20 +15,15 @@ public struct Season: Codable {
     public let seasonNumber: Int
 
     enum CodingKeys: String, CodingKey {
-        // case _id = "_id"
+        case id, episodes, name, overview
         case airDate = "air_date"
-        case episodes = "episodes"
-        case id = "id"
-        case name = "name"
-        case overview = "overview"
         case posterPath = "poster_path"
         case seasonNumber = "season_number"
     }
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        // _id = try values.decodeIfPresent(String.self, forKey: ._id)
-        airDate = TVDBDateFormatter.shared.createDate(from: try values.decodeIfPresent(String.self, forKey: .airDate) ?? "")
+        airDate = TheMovieDBDateFormatter.shared.createDate(from: try values.decodeIfPresent(String.self, forKey: .airDate) ?? "")
         episodes = try values.decodeIfPresent([Episode].self, forKey: .episodes) ?? []
         id = try values.decode(Int.self, forKey: .id)
         name = try values.decodeIfPresent(String.self, forKey: .name) ?? "<<No title>>"
@@ -74,13 +47,10 @@ public struct Season: Codable {
         public let voteCount: Int?
 
         enum CodingKeys: String, CodingKey {
+            case id, name, crew, overview
             case airDate = "air_date"
-            case crew = "crew"
             case episodeNumber = "episode_number"
             case guestStars = "guest_stars"
-            case id = "id"
-            case name = "name"
-            case overview = "overview"
             case productionCode = "production_code"
             case seasonNumber = "season_number"
             case stillPath = "still_path"
@@ -90,7 +60,7 @@ public struct Season: Codable {
     
         public init(from decoder: Decoder) throws {
             let values = try decoder.container(keyedBy: CodingKeys.self)
-            airDate = TVDBDateFormatter.shared.createDate(from: try values.decodeIfPresent(String.self, forKey: .airDate) ?? "")
+            airDate = TheMovieDBDateFormatter.shared.createDate(from: try values.decodeIfPresent(String.self, forKey: .airDate) ?? "")
             crew = try values.decodeIfPresent([Crew].self, forKey: .crew) ?? []
             episodeNumber = try values.decode(Int.self, forKey: .episodeNumber)
             guestStars = try values.decodeIfPresent([GuestStar].self, forKey: .guestStars) ?? []
@@ -113,7 +83,7 @@ public struct Season: Codable {
         }
 
         public var description: String {
-            "\(seasonNumber)x\(episodeNumber), \(name), aired: \(airDate), id: \(id)"
+            "\(seasonNumber)x\(episodeNumber), \(name), aired: \(airDate != nil ? "\(airDate!)" : "unknown"), id: \(id)"
         }
     }
 
@@ -131,16 +101,10 @@ public struct Season: Codable {
         public let profilePath: String?
 
         enum CodingKeys: String, CodingKey {
-            case adult = "adult"
-            case character = "character"
+            case id, name, gender, adult, character, order, popularity
             case creditId = "credit_id"
-            case gender = "gender"
-            case id = "id"
             case knownForDepartment = "known_for_department"
-            case name = "name"
-            case order = "order"
             case originalName = "original_name"
-            case popularity = "popularity"
             case profilePath = "profile_path"
         }
     
@@ -174,16 +138,10 @@ public struct Season: Codable {
         public let profilePath: String?
 
         enum CodingKeys: String, CodingKey {
-            case adult = "adult"
+            case id, name, gender, adult, department, job, popularity
             case creditId = "credit_id"
-            case department = "department"
-            case gender = "gender"
-            case id = "id"
-            case job = "job"
             case knownForDepartment = "known_for_department"
-            case name = "name"
             case originalName = "original_name"
-            case popularity = "popularity"
             case profilePath = "profile_path"
         }
     

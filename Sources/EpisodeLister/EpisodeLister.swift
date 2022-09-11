@@ -1,64 +1,44 @@
-import TVDBKit
+import TheMovieDBKit
 import Foundation
 
-// https://developers.themoviedb.org/3/tv/get-tv-details
-// https://www.themoviedb.org/settings/api
+/// API reference: https://developers.themoviedb.org/3/getting-started/introduction
 
 @main
 struct EpisodeLister {
-    static func main() {
-        print("")
-        let semaphore = DispatchSemaphore(value: 0)
-
-        func resultPrinter(result: Result<[Season.Episode], TVDBError>) {
-            switch result {
-                case .success(let episodes):
-                    print("[SUCCESS] Episodes:")
-                    episodes.forEach { print($0) }
-                case .failure(let error):
-                    print(String(describing: error))
-            }
-            semaphore.signal()
+    static func main() async {
+        let errorResult = await TheMovieDB.TV.getDetails(ofShow: Show.Constantine)
+        switch errorResult {
+            case .success(let series):
+                print("[SUCCESS] series: \(series)")
+            case .failure(let error):
+                print("[ERROR] \(error)")
         }
 
-        TVDB.Convenience.getEpisodes(ofShowWithId: Show.Constantine, completion: resultPrinter)
-        semaphore.wait()
+        TheMovieDB.setToken(Constants.apiKey)
 
-        // API key has been abstracted away by the developer. To enable building,
-        // replace `Constants.apiKey` with a `String` v4 bearer token, or uncomment
-        // and complete the following struct:
-        // struct Constants {
-        //     static let apiKey: String = <<V4 API KEY HERE>>
-        // }
-        TVDB.setToken(Constants.apiKey)
-
-        TVDB.Convenience.getEpisodes(ofShowWithId: 80986790832457890, completion: resultPrinter)
-        semaphore.wait()
-
-        TVDB.TVSeasons.getDetails(ofSeason: 1, forShowWithId: Show.Constantine) { result in
-            switch result {
-                case .success(let season):
-                    print("[SUCCESS] Season: \(season)")
-                case .failure(let error):
-                    print(String(describing: error))
-            }
-            semaphore.signal()
+        let seriesResult = await TheMovieDB.TV.getDetails(ofShow: Show.Constantine)
+        switch seriesResult {
+            case .success(let series):
+                print("[SUCCESS] series: \(series)")
+            case .failure(let error):
+                print("[ERROR] \(error)")
         }
-        semaphore.wait()
 
-        TVDB.Convenience.getEpisodes(ofShowWithId: Show.LegendsOfTomorrow, completion: resultPrinter)
-        semaphore.wait()
-
-        TVDB.TV.getDetails(ofShowWithId: Show.Constantine) { result in
-            switch result {
-                case .success(let series):
-                    print("[SUCCESS] series: \(series)")
-                case .failure(let error):
-                    print(String(describing: error))
-            }
-            semaphore.signal()
+        let seasonResult = await TheMovieDB.TVSeasons.getDetails(ofSeason: 1, forShow: Show.Stargirl)
+        switch seasonResult {
+            case .success(let season):
+                print("[SUCCESS] season: \(season.name)")
+            case .failure(let error):
+                print("[ERROR] \(error)")
         }
-        semaphore.wait()
+
+        let episodesResult = await TheMovieDB.Convenience.getEpisodes(ofShow: Show.Stargirl)
+        switch episodesResult {
+            case .success(let episodes):
+                print("[SUCCESS] episodes: \(episodes.map({ $0.name }).joined(separator: ", "))")
+            case .failure(let error):
+                print("[ERROR] \(error)")
+        }
     }
 }
 
