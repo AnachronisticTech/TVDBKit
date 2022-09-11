@@ -1,6 +1,6 @@
 import Foundation
 
-struct TheMovieDBDateFormatter {
+internal struct TheMovieDBDateFormatter {
     static var shared = TheMovieDBDateFormatter()
     let formatter = DateFormatter()
     let timezone = TimeZone(abbreviation: "UTC")!

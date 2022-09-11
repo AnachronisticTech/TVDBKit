@@ -5,6 +5,7 @@ import FoundationNetworking
 
 public enum TheMovieDBError: Error, CustomStringConvertible {
     case bearerTokenNotSetError
+    case malformedInput(String)
     case transportError(Error)
     case serverError(statusCode: Int)
     case emptyData
@@ -34,6 +35,8 @@ public enum TheMovieDBError: Error, CustomStringConvertible {
         switch self {
             case .bearerTokenNotSetError: 
                 return "No Bearer token was provided for authentication. Please set one using `TheMovieDB.setToken(_:)`. A v4 auth token can be obtained from https://www.themoviedb.org/settings/api."
+            case .malformedInput(let input):
+                return "The provided input \(input) was not correctly formed."
             case .transportError(let error):
                 return "There was a problem communicating with the server: \(error)"
             case .serverError(statusCode: let code):

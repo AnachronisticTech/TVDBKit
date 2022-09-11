@@ -39,6 +39,14 @@ struct EpisodeLister {
             case .failure(let error):
                 print("[ERROR] \(error)")
         }
+
+        let searchResult = await TheMovieDB.Search.shows("Star Trek")
+        switch searchResult {
+            case .success(let result):
+                print("[SUCCESS] search: \(result)")
+            case .failure(let error):
+                print("[ERROR] \(error)")
+        }
     }
 }
 
