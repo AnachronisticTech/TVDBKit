@@ -1,6 +1,10 @@
 import Foundation
 
 internal enum Decoders {
+    static let apiConfigurationDecoder = ResultDecoder<APIConfiguration> { data in
+        try JSONDecoder().decode(APIConfiguration.self, from: data)
+    }
+
     static let seriesDecoder = ResultDecoder<Series> { data in
         try JSONDecoder().decode(Series.self, from: data)
     }

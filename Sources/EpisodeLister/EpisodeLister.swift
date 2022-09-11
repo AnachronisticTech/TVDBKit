@@ -20,6 +20,15 @@ struct EpisodeLister {
         switch seriesResult {
             case .success(let series):
                 print("[SUCCESS] series: \(series)")
+                if let posterPath = series.posterPath {
+                    let imageResult = await TheMovieDB.Images.get(from: posterPath)
+                    switch imageResult {
+                        case .success(let data):
+                            print("[SUCCESS] image: \(String(describing: data))")
+                        case .failure(let error):
+                            print("[ERROR] \(error)")
+                    }
+                }
             case .failure(let error):
                 print("[ERROR] \(error)")
         }
