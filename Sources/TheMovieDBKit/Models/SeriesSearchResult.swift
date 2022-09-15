@@ -25,19 +25,19 @@ public struct SeriesSearchResult: Codable {
     }
 
     public struct SearchResult: Codable {
-        let id: Int
-        let name: String
-        let overview: String
-        let originalName: String
-        let originalLanguage: String
-        let firstAirDate: Date?
-        let posterPath: String?
-        let backdropPath: String?
-        let popularity: Double
-        let voteAverage: Double
-        let voteCount: Int
-        let originCountry: [String]
-        let genreIds: [Int]
+        public let id: Int
+        public let name: String
+        public let overview: String
+        public let originalName: String
+        public let originalLanguage: String
+        public let firstAirDate: Date?
+        public let posterPath: String?
+        public let backdropPath: String?
+        public let popularity: Double
+        public let voteAverage: Double
+        public let voteCount: Int
+        public let originCountry: [String]
+        public let genreIds: [Int]
 
         enum CodingKeys: String, CodingKey {
             case id, name, overview, popularity
